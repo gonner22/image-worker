@@ -1,39 +1,33 @@
-This repository allows you to set up a AI Horde Worker to generate, post-process or analyze images for others
+This repository allows you to set up a AIPG Grid Worker to generate, post-process or analyze images for others
 
 
 If you want the latest information or have questions, come to [the #local-workers channel in discord](https://discord.com/channels/781145214752129095/1076124012305993768)
 
 
-# AI Horde Worker reGen
+# AIPG Grid Worker reGen
 
-This repo contains the latest implementation for the [AI Horde](https://aihorde.net) Worker. This will turn your graphics card(s) into a worker for the AI Horde where you will create images for others. You you will receive in turn earn 'kudos' which will give you priority for your own generations.
+This repo contains the latest implementation for the [AIPG Grid](https://api.aipowergrid.io) Worker. This will turn your graphics card(s) into a worker for the AIPG Grid where you will create images for others. You you will receive in turn earn 'kudos' which will give you priority for your own generations.
 
-## Important Info
 
-- **An SSD is strongly recommended** especially if you are offering more than one model.
-  - If you only have an HDD available to you, you can only offer one model and will have to be able to load 3-8gb off disk within 60 seconds or the worker will not function.
-- Do not set threads higher than 2 unless you have a data-center grade card (48gb+ VRAM)
-- Your memory usage will increase up until the number of queued jobs (`queue_size` in the config).
-  - If you have **less than 32gb of system ram**, you should should stick to `queue_size: 1`.
-  - If you have **less than 16gb of system ram** or you experience frequent memory-related crashes:
-    - Do not offer SDXL/SD21 models. You can do this by adding ` ALL SDXL` and `ALL SD21` to your `models_to_skip` if you are using the `TOP N` model load option to automatically remove these heavier models from your offerings.
-    - Set `allow_post_processing` and `allow_controlnet` to false
-    - Set `queue_size: 0`
-- If you plan on running SDXL, you will need to ensure at least 9 gb of system ram remains free while the worker is running.
+Please note that **AMD card are not currently well supported**, but may be in the future. If you are willing to try with your AMD card, join the [discord discussion](https://discord.com/channels/781145214752129095/1076124012305993768).
+
+
+## Some important details you should know before you start
+
+- If you are upgrading from `AI-Horde-Worker`, you will have to manually move your models folder to the `horde-worker-reGen` folder. This folder may be named `models` or `nataili` (depending on when you installed) and should contain a folder named `compvis`.
+  - We recommend you start with a fresh bridge data file (`bridgeData_template.yaml` -> `bridgeData.yaml`). See Configure section
+- When submitting debug information **do not publish `.log` files in the discord server channels - send them to tazlin directly** as we cannot guarantee that your API key would not be in it (though, this warning should relax over time).
+- Do not set threads higher than 2.
+- Your memory usage will increase up until the number of queued jobs. You should set your queue size to at least 1.
+- If you have a low amount of **system** memory (16gb or under), do not attempt a queue size greater than 1 if you have more than one model set to load.
+- If you plan on running SDXL, you will need to ensure at least 9 gb of system ram remains free.
 - If you have an 8 gb card, SDXL will only reliably work at max_power values close to 32. 42 was too high for tests on a 2080 in certain cases.
-
-### AMD
-~~Please note that **AMD cards are not currently well supported**, but may be in the future.~~
-
-> Update: **AMD** now has been shown to have better support but for **linux machines only** - linux must be installed on the bare metal machine; windows systems, WSL or linux containers still do not work. You can now follow this guide using  `horde-bridge-rocm.sh` and `update-runtime-rocm.sh` where appropriate.
-
-If you are willing to try with your AMD card, join the [discord discussion](https://discord.com/channels/781145214752129095/1076124012305993768).
 
 # Installing
 
 **Please see the prior section before proceeding.**
 
-If you haven't already, go to [AI Horde and register an account](https://aihorde.net/register), then store your API key somewhere secure. Treat your API key like a password. You will need it later in these instructions. This will allow your worker to gather kudos for your account.
+If you haven't already, go to [AIPG Grid and register an account](https://api.aipowergrid.io/register), then store your API key somewhere secure. Treat your API key like a password. You will need it later in these instructions. This will allow your worker to gather kudos for your account.
 
 
 ### Windows
@@ -92,12 +86,12 @@ Continue with the [Basic Usage](#Basic-Usage) instructions
 The below instructions refers to `horde-bridge` or `update-runtime`. Depending on your OS, append `.cmd` for windows, or `.sh` for linux
 - for example, `horde-bridge.cmd` and `update-runtime.cmd` for windows
 
-> Note: If you have an **AMD** card you should use `horde-bridge-rocm.sh` and `update-runtime-rocm.sh` where appropriate
-
 You can double click the provided script files below from a file explorer or run it from a terminal like `bash`, `cmd` depending on your OS. The latter option will allow you to **see errors in case of a crash**, so it's recommended.
 
 
 ### Configure
+
+#### Manually
 
 1. Make a copy of `bridgeData_template.yaml` to `bridgeData.yaml`
 1. Edit `bridgeData.yaml` and follow the instructions within to fill in your details.
@@ -116,7 +110,7 @@ You can double click the provided script files below from a file explorer or run
 
 #### Stopping the worker
 
-* In the terminal in which it's running, press `Ctrl+C` together.
+* In the terminal in which it's running, simply press `Ctrl+C` together.
 * The worker will finish the current jobs before exiting.
 
 
@@ -136,7 +130,7 @@ etc
 
 ## Updating
 
-The AI Horde workers are under constant improvement. You can follow progress [in our discord](https://discord.gg/3DxrhksKzn) and get notifications about updates there. If you are interested in receiving notifications for worker updates or betas, go to the [#get-roles channel](https://discord.com/channels/781145214752129095/977498954616954890) and get the appropriate role(s).
+The AIPG Grid workers are under constant improvement. You can follow progress [in our discord](https://discord.gg/3DxrhksKzn) and get notifications about updates there. If you are interested in receiving notifications for worker updates or betas, go to the [#get-roles channel](https://discord.com/channels/781145214752129095/977498954616954890) and get the appropriate role(s).
 
 To update:
 
@@ -148,7 +142,7 @@ To update:
     Use this approach if you cloned the original repository using `git clone`
 
     1. Open a or `bash`, `cmd`, or `powershell` terminal depending on your OS
-    2. Navigate to the folder you have the AI Horde Worker repository installed if you're not already there.
+    2. Navigate to the folder you have the AIPG Grid Worker repository installed if you're not already there.
     3. run `git pull`
 
     ### zip method
@@ -158,7 +152,7 @@ To update:
 
     1. delete the `horde_worker_regen/` directory from your folder
     1. Download the [repository from github as a zip file](https://github.com/db0/horde-worker-reGen/archive/refs/heads/main.zip)
-    1. Extract its contents into the same the folder you have the AI Horde Worker repository installed, overwriting any existing files
+    1. Extract its contents into the same the folder you have the AIPG Grid Worker repository installed, overwriting any existing files
 
 1. Run the `update-runtime` script for your OS. This will update all dependencies if required.
    - Some updates may not require this and the update notification will tell you if this is the case.
