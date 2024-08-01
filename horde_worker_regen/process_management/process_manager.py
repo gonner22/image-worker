@@ -3331,7 +3331,7 @@ class HordeWorkerProcessManager:
                         f"(~{kudos_per_hour:.2f} kudos/hour)",
                     )
 
-                logger.info(f"Worker Kudos Accumulated: {self.user_info.kudos_details.accumulated:.2f}")
+                #logger.info(f"Worker Kudos Accumulated: {self.user_info.kudos_details.accumulated:.2f}") <-- Remove Kudos msg
                 if (
                     self.user_info.kudos_details.accumulated is not None
                     and self.user_info.kudos_details.accumulated < 0
