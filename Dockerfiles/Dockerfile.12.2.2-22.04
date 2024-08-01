@@ -2,6 +2,9 @@ FROM nvidia/cuda:12.2.2-runtime-ubuntu22.04
 
 ARG DEBIAN_FRONTEND=noninteractive
 
+# Add the AI_HORDE_URL environment variable
+ENV AI_HORDE_URL="https://api.aipowergrid.io/api/"
+
 RUN apt-get update && \
     apt-get install -y software-properties-common && \
     add-apt-repository ppa:deadsnakes/ppa && \
